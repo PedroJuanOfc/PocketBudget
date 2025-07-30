@@ -14,9 +14,19 @@ struct PocketBudgetApp: App {
 
     var body: some Scene {
         WindowGroup {
-            AccountListView()
-                .environment(\.managedObjectContext,
-                              persistenceController.container.viewContext)
+            TabView {
+                AccountListView()
+                    .tabItem {
+                        Label("Contas", systemImage: "list.bullet")
+                    }
+
+                DashboardView()
+                    .tabItem {
+                        Label("Dashboard", systemImage: "house.fill")
+                    }
+            }
+            .environment(\.managedObjectContext,
+                         persistenceController.container.viewContext)
         }
     }
 }

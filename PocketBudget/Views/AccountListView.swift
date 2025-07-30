@@ -5,8 +5,6 @@
 //  Created by Pedro Juan Ferreira Saraiva on 29/07/25.
 //
 
-// AccountListView.swift
-
 import SwiftUI
 import CoreData
 
@@ -33,7 +31,7 @@ struct AccountListView: View {
                                 .font(.subheadline)
                         }
                         Spacer()
-                        Text("R$ \(account.amount, specifier: "%.2f")")
+                        Text(String(format: "R$ %.2f", account.amount))
                         Button {
                             viewModel.togglePaid(account)
                         } label: {
@@ -42,6 +40,13 @@ struct AccountListView: View {
                                 : "circle")
                         }
                         .buttonStyle(BorderlessButtonStyle())
+                    }
+                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                        Button(role: .destructive) {
+                            viewModel.delete(account)
+                        } label: {
+                            Label("Excluir", systemImage: "trash")
+                        }
                     }
                 }
                 .onDelete { indexSet in
