@@ -10,9 +10,7 @@ import CoreData
 
 struct AccountListView: View {
     @Environment(\.managedObjectContext) private var context
-
     @StateObject private var viewModel: AccountListViewModel
-
     @State private var showingAdd = false
 
     init(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
@@ -57,6 +55,9 @@ struct AccountListView: View {
             }
             .navigationTitle("Contas")
             .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    EditButton()
+                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         showingAdd = true
