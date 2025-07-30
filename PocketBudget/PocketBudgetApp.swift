@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 @main
 struct PocketBudgetApp: App {
@@ -13,8 +14,9 @@ struct PocketBudgetApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            AccountListView()
+                .environment(\.managedObjectContext,
+                              persistenceController.container.viewContext)
         }
     }
 }
