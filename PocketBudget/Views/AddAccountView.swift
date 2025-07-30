@@ -5,8 +5,6 @@
 //  Created by Pedro Juan Ferreira Saraiva on 29/07/25.
 //
 
-// AddAccountView.swift
-
 import SwiftUI
 
 struct AddAccountView: View {
