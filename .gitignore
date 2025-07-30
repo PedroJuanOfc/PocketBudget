@@ -1,0 +1,28 @@
+# Build artefacts
+build/
+DerivedData/
+*.xcworkspace
+xcuserdata/
+
+# CocoaPods
+Pods/
+
+# Carthage
+Carthage/Build/
+
+# Swift Package Manager
+/.build/
+/Packages
+
+# Xcode
+*.xcuserstate
+*.xccheckout
+*.xcscmblueprint
+
+# Core Data
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+
+# Misc
+.DS_Store
