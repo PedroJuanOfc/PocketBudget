@@ -26,7 +26,7 @@ struct PocketBudgetApp: App {
                     }
             }
             .environment(\.managedObjectContext,
-                         persistenceController.container.viewContext)
+                          persistenceController.container.viewContext)
         }
     }
 }
