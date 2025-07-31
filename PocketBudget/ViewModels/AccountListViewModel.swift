@@ -58,4 +58,10 @@ class AccountListViewModel: ObservableObject {
             print("Erro ao salvar contexto:", error)
         }
     }
+    func updateAccount(_ account: Account, name: String, amount: Double, dueDate: Date) {
+            account.name = name
+            account.amount = amount
+            account.dueDate = dueDate
+            save()
+    }
 }

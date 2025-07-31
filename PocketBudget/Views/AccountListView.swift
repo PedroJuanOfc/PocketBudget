@@ -12,6 +12,8 @@ struct AccountListView: View {
     @Environment(\.managedObjectContext) private var context
     @StateObject private var viewModel: AccountListViewModel
     @State private var showingAdd = false
+    @State private var editingAccount: Account?
+    @State private var isEditing = false
 
     init(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
         _viewModel = StateObject(wrappedValue: AccountListViewModel(context: context))
@@ -33,30 +35,38 @@ struct AccountListView: View {
                         Button {
                             viewModel.togglePaid(account)
                         } label: {
-                            Image(systemName: account.isPaid
+                            Image(systemName:
+                                account.isPaid
                                 ? "checkmark.circle.fill"
                                 : "circle")
                         }
                         .buttonStyle(BorderlessButtonStyle())
-                    }
-                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                        Button(role: .destructive) {
-                            viewModel.delete(account)
-                        } label: {
-                            Label("Excluir", systemImage: "trash")
+
+                        if isEditing {
+                            Button {
+                                editingAccount = account
+                            } label: {
+                                Image(systemName: "pencil")
+                            }
+                            .buttonStyle(BorderlessButtonStyle())
+
+                            Button(role: .destructive) {
+                                viewModel.delete(account)
+                            } label: {
+                                Image(systemName: "trash")
+                            }
+                            .buttonStyle(BorderlessButtonStyle())
                         }
                     }
-                }
-                .onDelete { indexSet in
-                    indexSet
-                        .map { viewModel.accounts[$0] }
-                        .forEach(viewModel.delete)
+                    .padding(.vertical, 4)
                 }
             }
             .navigationTitle("Contas")
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    EditButton()
+                    Button(action: { isEditing.toggle() }) {
+                        Text(isEditing ? "OK" : "Editar")
+                    }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
@@ -69,6 +79,17 @@ struct AccountListView: View {
             .sheet(isPresented: $showingAdd) {
                 AddAccountView(isPresented: $showingAdd, viewModel: viewModel)
                     .environment(\.managedObjectContext, context)
+            }
+            .sheet(item: $editingAccount) { account in
+                EditAccountView(
+                    isPresented: Binding(
+                        get: { editingAccount != nil },
+                        set: { if !$0 { editingAccount = nil } }
+                    ),
+                    viewModel: viewModel,
+                    account: account
+                )
+                .environment(\.managedObjectContext, context)
             }
         }
     }
