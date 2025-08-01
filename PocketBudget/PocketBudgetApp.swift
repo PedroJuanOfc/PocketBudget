@@ -16,17 +16,15 @@ struct PocketBudgetApp: App {
         WindowGroup {
             TabView {
                 AccountListView()
-                    .tabItem {
-                        Label("Contas", systemImage: "list.bullet")
-                    }
-
+                    .tabItem { Label("Contas", systemImage: "list.bullet") }
                 DashboardView()
-                    .tabItem {
-                        Label("Dashboard", systemImage: "house.fill")
-                    }
+                    .tabItem { Label("Dashboard", systemImage: "house.fill") }
+                InvestmentsView()
+                    .tabItem { Label("Investimentos", systemImage: "chart.line.uptrend.xyaxis") }
             }
             .environment(\.managedObjectContext,
-                          persistenceController.container.viewContext)
+                         persistenceController.container.viewContext)
+
         }
     }
 }
